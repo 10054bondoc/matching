@@ -7,6 +7,24 @@ newGame.addEventListener('click', init);
 
 init();
 
+function shuffle(array) {
+    let shuffles = Math.floor(Math.random() * 100);
+    let output = array;
+    function swap() {
+        let left = Math.floor(Math.random() * (list.length)) % list.length;
+        let right = Math.floor(Math.random() * (list.length)) % list.length;
+        if (left === right) return;
+        let leftItem = output[left];
+        let rightItem = output[right];
+        output[left] = rightItem;
+        output[right] = leftItem;
+    }
+    for (let i = 0; i < shuffles; i++) {
+        swap();
+    }
+    return output
+}
+
 function init() {
     // this for loop makes the images hidden
     for (i = 0; i < list.length; i++) {
@@ -26,14 +44,12 @@ function init() {
         listR.push(availableImages)
         count++;
         availableImages--;
+
     }
 
-    // shuffle that list so that every new game, the image elements will refer to a different image file
-    function shuffle(array) {
-        array.sort(() => Math.random() - 0.5);
-      }
-    
-    shuffle(listR)
+    listR = shuffle(listR)
+
+    console.log(listR)
     
     // for each image element, assign the image file
     for (i = 0; i < list.length; i++) {
@@ -43,47 +59,76 @@ function init() {
 
 
 // make a list of two values that will hold the first click and the second click
-var clickedImage = [];
-var choiceOne, choiceTwo;
+var currentlyselected = null;
+var theMoment = false;
+
+function reveal(node) {
+    node.style.backgroundSize = '165px 118px'
+}
+
+function hide(node) {
+    node.style.backgroundSize = '0px 0px';
+}
 
 boxes.addEventListener('click', function(event) {
 
-    // if a box is clicked, the image background will become the normal size
-    event.target.style.backgroundSize = '165px 118px';
-    // list of two values is created here
-    clickedImage.push(event.target);
+    if (theMoment) return;
 
-    choiceOne = clickedImage[0];
-    choiceTwo = clickedImage[1];
-
-
-    function disappearImage() {
-        clickedImage[0].style.backgroundSize = '0px 0px';
-        clickedImage[1].style.backgroundSize = '0px 0px';
-        clickedImage = []
+    if (currentlyselected == null)  {
+        currentlyselected = event.target;
+        reveal(currentlyselected);
+        return;
     }
 
-    // function delay() {
-    //     setTimeout(function(){ 
-    //         clickedImage[0].style.backgroundSize = '0px 0px';
-    //         clickedImage[1].style.backgroundSize = '0px 0px';; 
-    //     }, 5000);
-    // }
+    if (event.target === currentlyselected) {
+        hide(currentlyselected);
+        currentlyselected = null;
+        return;
+    }
 
-    if (clickedImage[0].id === clickedImage[1].id) {
-        disappearImage(); 
+    var secondItem = event.target;
+    reveal(secondItem)
+
+    if (currentlyselected.style.backgroundImage === secondItem.style.backgroundImage) {
+        currentlyselected = null
     } else {
-         // this will compare the two values, if they are the same, the image will remain big, if not the image will be small again
-        if (clickedImage[0].style.backgroundImage === clickedImage[1].style.backgroundImage) {
-            clickedImage[0].style.backgroundSize = '165px 118px';
-            clickedImage[1].style.backgroundSize = '165px 118px';
-            clickedImage = [];
-        } else {
-            disappearImage();
-        }
+        theMoment = true
+        setTimeout(function () {
+            hide(currentlyselected)
+            hide(secondItem)
+            currentlyselected = null
+            theMoment = false
+        }, 1000)
     }
-    // then empty the list again so we can take two new values
-    
 })
 
 // add a button that will add two new boxes
+
+
+/**
+ * Implement a matching game similar to the classic 90's game "memory"
+ *
+ * You have to pick two matching cards with the same picture.
+ *
+ * 1. When you select a card and no other card has been selected before, reveal it
+ * 2. When you select a card and another card has been revealed, compare the revealed card with the selected one
+ *    a. If the card matches, they stay open
+ *    b. if the cards don't match, wait a moment seconds, then close both
+ *       during the "moment" all clicks are disabled
+ * 3. When all cards have been flipped, the game is over.
+ */
+
+/**
+ * Questions to ask when looking at a problem like this:
+ *
+ * 1. What application state do I need to implement this:
+ *    application state refers to "persistent" memory.
+ *
+ * 2. What are the ways in which the state is maniplulated or "transitioned"
+ *
+ * this describes a Finite state machine
+ */
+
+
+
+
