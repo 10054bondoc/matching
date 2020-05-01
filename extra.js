@@ -43,11 +43,11 @@ function init() {
 
 
 // make a list of two values that will hold the first click and the second click
-
+var clickedImage = [];
+var choiceOne, choiceTwo;
 
 boxes.addEventListener('click', function(event) {
-    var clickedImage = [];
-    var choiceOne, choiceTwo;
+
     // if a box is clicked, the image background will become the normal size
     event.target.style.backgroundSize = '165px 118px';
     // list of two values is created here
@@ -60,29 +60,30 @@ boxes.addEventListener('click', function(event) {
     function disappearImage() {
         clickedImage[0].style.backgroundSize = '0px 0px';
         clickedImage[1].style.backgroundSize = '0px 0px';
+        clickedImage = []
     }
 
+    // function delay() {
+    //     setTimeout(function(){ 
+    //         clickedImage[0].style.backgroundSize = '0px 0px';
+    //         clickedImage[1].style.backgroundSize = '0px 0px';; 
+    //     }, 5000);
+    // }
+
     if (clickedImage[0].id === clickedImage[1].id) {
-        clickedImage.pop;
-        
+        disappearImage(); 
     } else {
+         // this will compare the two values, if they are the same, the image will remain big, if not the image will be small again
         if (clickedImage[0].style.backgroundImage === clickedImage[1].style.backgroundImage) {
             clickedImage[0].style.backgroundSize = '165px 118px';
             clickedImage[1].style.backgroundSize = '165px 118px';
-            // this will compare the two values, if they are the same, the image will remain big, if not the image will be small again
+            clickedImage = [];
         } else {
             disappearImage();
         }
     }
     // then empty the list again so we can take two new values
-    clickedImage = [];
+    
 })
 
 // add a button that will add two new boxes
-
-
-
-
-
-
-
