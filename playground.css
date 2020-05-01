@@ -1,0 +1,50 @@
+.canvas {
+    position: absolute;
+    
+    top: 10;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 339px;
+    height: 368px;
+
+    border-style: solid;
+    border-width: 2px;
+    border-color: #f0cf6e;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    background-color: #ffdd78;
+}
+
+
+
+.img {
+    position: relative;
+
+    width: 165px;
+    height: 118px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #c47f29;
+
+    margin: 1px;
+
+    opacity: 1;
+
+    /* background-color: #ffa333; */
+    background-size: 0px 0px;
+
+    cursor: pointer;
+
+}
+
+.img:hover {
+    background-color: #ffc680;
+}
+
+
+
