@@ -9,13 +9,10 @@ function shuffle(array) {
     temporaryValue,
     randomIndex;
 
-  // While there remain elements to shuffle...
   while (0 !== currentIndex) {
-    // Pick a remaining element...
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
 
-    // And swap it with the current element.
     temporaryValue = array[currentIndex];
     array[currentIndex] = array[randomIndex];
     array[randomIndex] = temporaryValue;
@@ -26,29 +23,24 @@ function shuffle(array) {
 const numArray = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5];
 shuffle(numArray);
 
-let firstClick;
-
 class BoardGame extends Component {
-  state = {
-    clickedImage: true,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      matched: false,
+    };
+  }
 
   componentDidUpdate() {
-    console.log(this.state.clickedImage);
+    console.log(this.state.matched);
   }
 
   render() {
     const renderedTile = numArray.map((el) => {
       return (
-        <div
-          key={Math.random() * 100}
-          onClick={() => this.setState({ ...this.state, clickedImage: true })} // hindi ko gets bakit once nagsetState ako hindi na magalawa yung Tile component??
-        >
-          <Tile
-            imgsource={images.source[el]}
-            revealed={this.state.revealed}
-            chosen={this.state.clickedImage}
-          />
+        <div key={Math.random() * 100}>
+          <Tile imgsource={images.source[el]} />
         </div>
       );
     });
@@ -57,4 +49,4 @@ class BoardGame extends Component {
   }
 }
 
-export default Radium(BoardGame);
+export default BoardGame;

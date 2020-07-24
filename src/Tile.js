@@ -22,52 +22,53 @@ class Tile extends Component {
       borderRadius: "5px",
       boxShadow: "0px 2px 3px #0a4580",
     },
+    matched: false,
   };
+
   reveal = (e) => {
-    if (this.props.chosen) {
-      if (e.target.style.backgroundColor === "rgb(58, 140, 222)") {
-        e.target.style.backgroundColor = "transparent";
-        e.target.children[0].style.opacity = 1;
-      } else {
-        this.hide(e);
-      }
-    }
+    this.setState({
+      styleP: { ...this.state.styleP, backgroundColor: "transparent" },
+    });
+    this.setState({ styleImg: { ...this.state.styleImg, opacity: 1 } });
+    console.log(e.target.style.backgroundColor);
   };
 
-  hide = (e) => {
-    e.target.children[0].style.opacity = 0;
-    e.target.style.backgroundColor = "rgb(58, 140, 222)";
+  hide = () => {
+    this.setState({
+      styleP: { ...this.state.styleP, backgroundColor: "#1476d8" },
+    });
+    this.setState({ styleImg: { ...this.state.styleImg, opacity: 0 } });
   };
 
-  tileHover = (e) => {
-    if (e.target.style.backgroundColor === "transparent") {
+  tileHover = () => {
+    if (this.state.styleP.backgroundColor === "transparent") {
       return;
     } else {
-      e.target.style.backgroundColor = "#3a8cde";
+      this.setState({
+        styleP: { ...this.state.styleP, backgroundColor: "#3a8cde" },
+      });
     }
   };
 
-  tileHoverOut = (e) => {
-    if (e.target.style.backgroundColor === "transparent") {
+  tileHoverOut = () => {
+    if (this.state.styleP.backgroundColor === "transparent") {
       return;
     } else {
-      e.target.style.backgroundColor = "#1476d8";
+      this.setState({
+        styleP: { ...this.state.styleP, backgroundColor: "#1476d8" },
+      });
     }
   };
-
-  componentDidMount() {
-    console.log("Hello from mounting");
-  }
-
-  componentDidUpdate() {
-    console.log("Hello from update");
-  }
 
   render() {
     return (
       <p
         style={this.state.styleP}
-        onClick={this.reveal}
+        onClick={
+          this.state.styleP.backgroundColor !== "transparent"
+            ? this.reveal
+            : this.hide
+        }
         onMouseEnter={this.tileHover}
         onMouseLeave={this.tileHoverOut}
       >
