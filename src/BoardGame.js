@@ -30,78 +30,30 @@ let firstClick;
 
 class BoardGame extends Component {
   state = {
-    styleImg: {
-      objectFit: "cover",
-      width: "10em",
-      height: "10em",
-      opacity: "0",
-      pointerEvents: "none",
-      borderRadius: "5px",
-    },
-    styleP: {
-      backgroundColor: "#1476d8",
-      width: "10em",
-      height: "10em",
-      cursor: "pointer",
-      position: "relative",
-      opacity: "1",
-      margin: "1em",
-      borderRadius: "5px",
-    },
-    choices: [],
+    clickedImage: true,
   };
 
-  reveal = (e) => {
-    if (e.target.style.backgroundColor === "rgb(58, 140, 222)") {
-      e.target.style.backgroundColor = "transparent";
-      e.target.children[0].style.opacity = 1;
-    } else {
-      this.hide(e);
-    }
-  };
-
-  hide = (e) => {
-    e.target.children[0].style.opacity = 0;
-    e.target.style.backgroundColor = "rgb(58, 140, 222)";
-  };
-
-  tileHover = (e) => {
-    if (e.target.style.backgroundColor === "transparent") {
-      return;
-    } else {
-      e.target.style.backgroundColor = "#3a8cde";
-    }
-  };
-
-  tileHoverOut = (e) => {
-    if (e.target.style.backgroundColor === "transparent") {
-      return;
-    } else {
-      e.target.style.backgroundColor = "#1476d8";
-    }
-  };
+  componentDidUpdate() {
+    console.log(this.state.clickedImage);
+  }
 
   render() {
     const renderedTile = numArray.map((el) => {
       return (
-        <p
+        <div
           key={Math.random() * 100}
-          style={this.state.styleP}
-          onClick={this.reveal}
-          onMouseEnter={this.tileHover}
-          onMouseLeave={this.tileHoverOut}
-          onChange
+          onClick={() => this.setState({ ...this.state, clickedImage: true })} // hindi ko gets bakit once nagsetState ako hindi na magalawa yung Tile component??
         >
-          <Tile styling={this.state.styleImg} imgsource={images.source[el]} />
-        </p>
+          <Tile
+            imgsource={images.source[el]}
+            revealed={this.state.revealed}
+            chosen={this.state.clickedImage}
+          />
+        </div>
       );
     });
 
-    return (
-      <div className={classes.BoardGame} onClick={this.game}>
-        {renderedTile}
-      </div>
-    );
+    return <div className={classes.BoardGame}>{renderedTile}</div>;
   }
 }
 
