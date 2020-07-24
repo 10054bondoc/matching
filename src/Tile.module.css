@@ -1,0 +1,18 @@
+.Tile {
+  background-color: #1370cc;
+
+  width: 6em;
+  height: 6em;
+  margin: 1em 1em;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.Tile:hover {
+  background-color: #1e84ea;
+}
+
+.Tile .opened {
+  background-color: transparent;
+}
