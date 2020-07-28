@@ -1,8 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import classes from "./BoardGame.module.css";
 import Tile from "./Tile";
 import images from "./imagelist";
-import Radium from "radium";
 
 function shuffle(array) {
   var currentIndex = array.length,
@@ -20,33 +19,28 @@ function shuffle(array) {
 
   return array;
 }
-const numArray = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5];
+const numArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 shuffle(numArray);
 
-class BoardGame extends Component {
-  constructor(props) {
-    super(props);
+export default function BoardGame() {
+  const [count, setCount] = useState(0);
 
-    this.state = {
-      matched: false,
-    };
-  }
-
-  componentDidUpdate() {
-    console.log(this.state.matched);
-  }
-
-  render() {
-    const renderedTile = numArray.map((el) => {
-      return (
-        <div key={Math.random() * 100}>
-          <Tile imgsource={images.source[el]} />
-        </div>
-      );
+  function adder() {
+    setCount((prev) => {
+      return prev + 1;
     });
-
-    return <div className={classes.BoardGame}>{renderedTile}</div>;
+    console.log(count);
   }
-}
 
-export default BoardGame;
+  return (
+    <div className={classes.BoardGame}>
+      {numArray.map((el) => {
+        return (
+          <div key={el.toString()} onClick={adder}>
+            <Tile imgsource={images.source[el]} />
+          </div>
+        );
+      })}
+    </div>
+  );
+}

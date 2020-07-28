@@ -6,7 +6,20 @@ import image5 from "./assets/vico-5.jpg";
 import image6 from "./assets/vico-6.jpg";
 
 const Images = {
-  source: [image1, image2, image3, image4, image5, image6],
+  source: [
+    image1,
+    image1,
+    image2,
+    image2,
+    image3,
+    image3,
+    image4,
+    image4,
+    image5,
+    image5,
+    image6,
+    image6,
+  ],
 };
 
 export default Images;
